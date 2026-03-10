@@ -191,4 +191,165 @@ Hasil
 | tanggal_reservasi | date | YES  |     | NULL    |                |
 +-------------------+------+------+-----+---------+----------------+
 ```
-### 9. Memasukkan 
+### 9. Memasukkan Data Pada Tabel Reservasi
+Query
+```
+INSERT INTO reservasi (id_reservasi, id_pelanggan, id_kamar, tanggal_reservasi) VALUES
+(1, 1, 1, '2026-03-01'),
+(2, 2, 4, '2026-03-02'),
+(3, 3, 7, '2026-03-02'),
+(4, 4, 2, '2026-03-03'),
+(5, 5, 5, '2026-03-04'),
+(6, 6, 8, '2026-03-04'),
+(7, 7, 3, '2026-03-05'),
+(8, 8, 9, '2026-03-06'),
+(9, 9, 6, '2026-03-06'),
+(10, 10, 10, '2026-03-07');
+```
+Hasil
+```
++--------------+--------------+----------+-------------------+
+| id_reservasi | id_pelanggan | id_kamar | tanggal_reservasi |
++--------------+--------------+----------+-------------------+
+|            1 |            1 |        1 | 2026-03-01        |
+|            2 |            2 |        4 | 2026-03-02        |
+|            3 |            3 |        7 | 2026-03-02        |
+|            4 |            4 |        2 | 2026-03-03        |
+|            5 |            5 |        5 | 2026-03-04        |
+|            6 |            6 |        8 | 2026-03-04        |
+|            7 |            7 |        3 | 2026-03-05        |
+|            8 |            8 |        9 | 2026-03-06        |
+|            9 |            9 |        6 | 2026-03-06        |
+|           10 |           10 |       10 | 2026-03-07        |
++--------------+--------------+----------+-------------------+
+```
+### 10. Menampilkan Data Yang Sama Pada Kedua Tabel Menggunakan _INNER_ JOIN
+Query
+```
+select reservasi.id_reservasi, pelanggan.nama_pelanggan, kamar.nomor_kamar, kamar.fasilitas_kamar, reservasi.tanggal_reservasi
+    -> from reservasi
+    -> inner join pelanggan
+    -> on reservasi.id_pelanggan=pelanggan.id_pelanggan
+    -> inner join kamar
+    -> on reservasi.id_kamar=kamar.id_kamar;
+```
+Hasil
+```
++--------------+----------------+-------------+------------------------+-------------------+
+| id_reservasi | nama_pelanggan | nomor_kamar | fasilitas_kamar        | tanggal_reservasi |
++--------------+----------------+-------------+------------------------+-------------------+
+|            1 | Andi Saputra   |         101 | Fan, TV                | 2026-03-01        |
+|            2 | Budi Hartono   |         201 | AC, TV, WiFi           | 2026-03-02        |
+|            3 | Citra Lestari  |         301 | AC, TV, WiFi, Bathtub  | 2026-03-02        |
+|            4 | Dewi Anggraini |         102 | AC, TV                 | 2026-03-03        |
+|            5 | Eko Pratama    |         202 | AC, TV, WiFi, Balkon   | 2026-03-04        |
+|            6 | Fajar Nugroho  |         302 | AC, TV, WiFi, Mini Bar | 2026-03-04        |
+|            7 | Gina Maharani  |         103 | AC, WiFi               | 2026-03-05        |
+|            8 | Hendra Wijaya  |         401 | AC, TV, WiFi, 2 Bed    | 2026-03-06        |
+|            9 | Intan Permata  |         203 | AC, TV, Mini Bar       | 2026-03-06        |
+|           10 | Joko Susanto   |         402 | AC, TV                 | 2026-03-07        |
++--------------+----------------+-------------+------------------------+-------------------+
+```
+### 11. Menambahkan Data Baru Pada Tabel Kamar
+Query
+```
+insert into kamar (nomor_kamar, tipe_kamar, fasilitas_kamar) values ('505', 'VVIP', 'Kasur Royal, Playstation 5, Netflix');
+```
+### 12. Menampilkan Data Baru di Tabel Kamar Menggunakan _LEFT_ JOIN
+Query
+```
+ select reservasi.id_reservasi, pelanggan.nama_pelanggan, kamar.nomor_kamar, kamar.fasilitas_kamar, reservasi.tanggal_reservasi
+    -> from reservasi
+    -> left join pelanggan
+    -> on reservasi.id_pelanggan=pelanggan.id_pelanggan
+    -> right join kamar
+    -> on reservasi.id_kamar=kamar.id_kamar;
+```
+Hasil
+```
++--------------+----------------+-------------+-------------------------------------+-------------------+
+| id_reservasi | nama_pelanggan | nomor_kamar | fasilitas_kamar                     | tanggal_reservasi |
++--------------+----------------+-------------+-------------------------------------+-------------------+
+|            1 | Andi Saputra   |         101 | Fan, TV                             | 2026-03-01        |
+|            4 | Dewi Anggraini |         102 | AC, TV                              | 2026-03-03        |
+|            7 | Gina Maharani  |         103 | AC, WiFi                            | 2026-03-05        |
+|            2 | Budi Hartono   |         201 | AC, TV, WiFi                        | 2026-03-02        |
+|            5 | Eko Pratama    |         202 | AC, TV, WiFi, Balkon                | 2026-03-04        |
+|            9 | Intan Permata  |         203 | AC, TV, Mini Bar                    | 2026-03-06        |
+|            3 | Citra Lestari  |         301 | AC, TV, WiFi, Bathtub               | 2026-03-02        |
+|            6 | Fajar Nugroho  |         302 | AC, TV, WiFi, Mini Bar              | 2026-03-04        |
+|            8 | Hendra Wijaya  |         401 | AC, TV, WiFi, 2 Bed                 | 2026-03-06        |
+|           10 | Joko Susanto   |         402 | AC, TV                              | 2026-03-07        |
+|         NULL | NULL           |         505 | Kasur Royal, Playstation 5, Netflix | NULL              |
++--------------+----------------+-------------+-------------------------------------+-------------------+
+```
+### 13. Menambahkan Data Baru Pada Tabel Pelanggan
+Query
+```
+insert into pelanggan (nama_pelanggan, usia, alamat) values ('Yi Sang', '30', 'Canto');
+```
+### 14. Menampilkan Data Baru di Tabel Pelanggan Menggunakan _RIGHT_ JOIN
+Query
+```
+ select reservasi.id_reservasi, pelanggan.nama_pelanggan, kamar.nomor_kamar, kamar.fasilitas_kamar, reservasi.tanggal_reservasi
+    -> from reservasi
+    -> right join pelanggan
+    -> on reservasi.id_pelanggan=pelanggan.id_pelanggan
+    -> left join kamar
+    -> on reservasi.id_kamar=kamar.id_kamar;
+```
+Hasil
+```
++--------------+----------------+-------------+------------------------+-------------------+
+| id_reservasi | nama_pelanggan | nomor_kamar | fasilitas_kamar        | tanggal_reservasi |
++--------------+----------------+-------------+------------------------+-------------------+
+|            1 | Andi Saputra   |         101 | Fan, TV                | 2026-03-01        |
+|            2 | Budi Hartono   |         201 | AC, TV, WiFi           | 2026-03-02        |
+|            3 | Citra Lestari  |         301 | AC, TV, WiFi, Bathtub  | 2026-03-02        |
+|            4 | Dewi Anggraini |         102 | AC, TV                 | 2026-03-03        |
+|            5 | Eko Pratama    |         202 | AC, TV, WiFi, Balkon   | 2026-03-04        |
+|            6 | Fajar Nugroho  |         302 | AC, TV, WiFi, Mini Bar | 2026-03-04        |
+|            7 | Gina Maharani  |         103 | AC, WiFi               | 2026-03-05        |
+|            8 | Hendra Wijaya  |         401 | AC, TV, WiFi, 2 Bed    | 2026-03-06        |
+|            9 | Intan Permata  |         203 | AC, TV, Mini Bar       | 2026-03-06        |
+|           10 | Joko Susanto   |         402 | AC, TV                 | 2026-03-07        |
+|         NULL | Yi Sang        |        NULL | NULL                   | NULL              |
++--------------+----------------+-------------+------------------------+-------------------+
+```
+### 15. Menampilkan Semua Data Baru di Kedua Tabel Menggunakan Simulasi _FULL_ JOIN 
+Query
+```
+select reservasi.id_reservasi, pelanggan.nama_pelanggan, kamar.nomor_kamar, kamar.fasilitas_kamar, reservasi.tanggal_reservasi
+    -> from reservasi
+    -> left join pelanggan
+    -> on reservasi.id_pelanggan=pelanggan.id_pelanggan
+    -> right join kamar
+    -> on reservasi.id_kamar=kamar.id_kamar
+    -> union
+    -> select reservasi.id_reservasi, pelanggan.nama_pelanggan, kamar.nomor_kamar, kamar.fasilitas_kamar, reservasi.tanggal_reservasi
+    -> from reservasi
+    -> right join pelanggan
+    -> on reservasi.id_pelanggan=pelanggan.id_pelanggan
+    -> left join kamar
+    -> on reservasi.id_kamar=kamar.id_kamar;
+```
+Hasil
+```
++--------------+----------------+-------------+-------------------------------------+-------------------+
+| id_reservasi | nama_pelanggan | nomor_kamar | fasilitas_kamar                     | tanggal_reservasi |
++--------------+----------------+-------------+-------------------------------------+-------------------+
+|            1 | Andi Saputra   |         101 | Fan, TV                             | 2026-03-01        |
+|            4 | Dewi Anggraini |         102 | AC, TV                              | 2026-03-03        |
+|            7 | Gina Maharani  |         103 | AC, WiFi                            | 2026-03-05        |
+|            2 | Budi Hartono   |         201 | AC, TV, WiFi                        | 2026-03-02        |
+|            5 | Eko Pratama    |         202 | AC, TV, WiFi, Balkon                | 2026-03-04        |
+|            9 | Intan Permata  |         203 | AC, TV, Mini Bar                    | 2026-03-06        |
+|            3 | Citra Lestari  |         301 | AC, TV, WiFi, Bathtub               | 2026-03-02        |
+|            6 | Fajar Nugroho  |         302 | AC, TV, WiFi, Mini Bar              | 2026-03-04        |
+|            8 | Hendra Wijaya  |         401 | AC, TV, WiFi, 2 Bed                 | 2026-03-06        |
+|           10 | Joko Susanto   |         402 | AC, TV                              | 2026-03-07        |
+|         NULL | NULL           |         505 | Kasur Royal, Playstation 5, Netflix | NULL              |
+|         NULL | Yi Sang        |        NULL | NULL                                | NULL              |
++--------------+----------------+-------------+-------------------------------------+-------------------+
+```
+> FULL JOIN pada MYSQL tidak memungkinkan. Oleh karena itu, ini hanya simulasi yang mendekati.
